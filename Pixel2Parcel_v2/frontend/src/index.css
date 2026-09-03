@@ -1,0 +1,78 @@
+@import 'ol/ol.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+  }
+}
+
+/* OpenLayers Custom Map & Canvas Styling */
+.ol-viewport {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ol-control {
+  background-color: #FFFFFF !important;
+  border-radius: 6px !important;
+  padding: 3px !important;
+  border: 1px solid #CBD5E1 !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12) !important;
+}
+
+.ol-control button {
+  background-color: #002147 !important;
+  color: #FFFFFF !important;
+  border-radius: 4px !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.ol-control button:hover {
+  background-color: #1D4ED8 !important;
+}
+
+.ol-scale-line {
+  background: rgba(0, 33, 71, 0.90) !important;
+  color: #FFFFFF !important;
+  border-radius: 4px !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  font-family: monospace !important;
+}
+
+/* Official DoLR Government Utility Classes */
+.bg-govt-navy {
+  background-color: #002147 !important;
+}
+
+.text-govt-navy {
+  color: #002147 !important;
+}
+
+.border-govt-navy {
+  border-color: #002147 !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94A3B8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748B;
+}
+
