@@ -4,19 +4,24 @@ import {
   LayoutDashboard, Map, Box, Upload, Cpu, Layers, AlertTriangle,
   ShieldAlert, Edit3, Compass, MessageSquare, FileText, ExternalLink
 } from 'lucide-react';
+import { useGISStore } from '../../store/gisStore';
+import { useTranslation } from '../../i18n/translations';
 
 export const Sidebar: React.FC = () => {
+  const { language } = useGISStore();
+  const { t } = useTranslation(language);
+
   const workflowSteps = [
-    { step: '01', path: '/government/upload', label: 'Survey Workspace (Input)', icon: Upload, subtitle: 'Drone RGB, ORI, DSM, DTM & Vector Inputs' },
-    { step: '02', path: '/government/segmentation', label: 'AI Feature Extraction', icon: Cpu, subtitle: 'Buildings, Roads, Vegetation & Land-Use' },
-    { step: '03', path: '/government/parcels', label: 'AI Parcel Extraction', icon: Layers, subtitle: 'Boundary & Vector Polygon Generation' },
-    { step: '04', path: '/government/topology', label: 'Topology Validation', icon: AlertTriangle, subtitle: 'Gaps, Overlaps & Encroachment Checks' },
-    { step: '05', path: '/government/workspace', label: 'WebGIS Review & Editing', icon: Map, subtitle: '2D WebGIS Parcel Review Workspace' },
-    { step: '05B', path: '/government/editor', label: 'Geometry Polygon Editor', icon: Edit3, subtitle: 'Merge, Split & Polygon Geometry Editing' },
-    { step: '05C', path: '/government/3d', label: '3D Terrain & DSM Globe', icon: Box, subtitle: 'Cesium 3D Surface & Elevation Mesh' },
-    { step: '06', path: '/government/verification', label: 'Field Verification (GNSS)', icon: Compass, subtitle: 'GNSS / CORS Survey Audit & Remarks' },
-    { step: '07', path: '/government/reports', label: 'Verified Map & GIS Export', icon: FileText, subtitle: 'PostGIS DB, GeoJSON, Shapefile, PDF' },
-    { step: '08', path: '/government/complaints', label: 'Grievance & Complaints', icon: MessageSquare, subtitle: 'Citizen Dispute Resolution Pipeline' },
+    { step: '01', path: '/government/upload', key: 'step_upload', label: 'Survey Workspace (Input)', icon: Upload, subtitle: 'Drone RGB, ORI, DSM, DTM & Vector Inputs' },
+    { step: '02', path: '/government/segmentation', key: 'step_seg', label: 'AI Feature Extraction', icon: Cpu, subtitle: 'Buildings, Roads, Vegetation & Land-Use' },
+    { step: '03', path: '/government/parcels', key: 'step_parcel', label: 'AI Parcel Extraction', icon: Layers, subtitle: 'Boundary & Vector Polygon Generation' },
+    { step: '04', path: '/government/topology', key: 'step_topo', label: 'Topology Validation', icon: AlertTriangle, subtitle: 'Gaps, Overlaps & Encroachment Checks' },
+    { step: '05', path: '/government/workspace', key: 'step_gis', label: 'WebGIS Review & Editing', icon: Map, subtitle: '2D WebGIS Parcel Review Workspace' },
+    { step: '05B', path: '/government/editor', key: 'step_editor', label: 'Geometry Polygon Editor', icon: Edit3, subtitle: 'Merge, Split & Polygon Geometry Editing' },
+    { step: '05C', path: '/government/3d', key: 'step_3d', label: '3D Terrain & DSM Globe', icon: Box, subtitle: 'Cesium 3D Surface & Elevation Mesh' },
+    { step: '06', path: '/government/verification', key: 'step_gnss', label: 'Field Verification (GNSS)', icon: Compass, subtitle: 'GNSS / CORS Survey Audit & Remarks' },
+    { step: '07', path: '/government/reports', key: 'step_reports', label: 'Verified Map & GIS Export', icon: FileText, subtitle: 'PostGIS DB, GeoJSON, Shapefile, PDF' },
+    { step: '08', path: '/government/complaints', key: 'step_complaints', label: 'Grievance & Complaints', icon: MessageSquare, subtitle: 'Citizen Dispute Resolution Pipeline' },
   ];
 
   return (
@@ -42,14 +47,14 @@ export const Sidebar: React.FC = () => {
           }
         >
           <LayoutDashboard className="w-4 h-4 text-amber-400 shrink-0" />
-          <span>Executive Dashboard</span>
+          <span>{t('exec_dashboard', 'Executive Dashboard')}</span>
         </NavLink>
       </div>
 
       {/* Nav List */}
       <nav className="flex-1 p-2 space-y-1 overflow-y-auto">
         <div className="px-2 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-          Architecture Workflow Steps
+          {t('workflow_steps', 'Architecture Workflow Steps')}
         </div>
 
         {workflowSteps.map((item) => {
@@ -71,7 +76,7 @@ export const Sidebar: React.FC = () => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center space-x-1.5 truncate font-semibold">
                   <Icon className="w-3.5 h-3.5 shrink-0 opacity-80" />
-                  <span className="truncate">{item.label}</span>
+                  <span className="truncate">{t(item.key, item.label)}</span>
                 </div>
                 <p className="text-[10px] text-slate-400 font-normal truncate leading-tight mt-0.5">
                   {item.subtitle}

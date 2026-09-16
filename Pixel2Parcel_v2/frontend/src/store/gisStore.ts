@@ -1,10 +1,14 @@
 import { create } from 'zustand';
 import { UserRole, GISLayer, ParcelFeature } from '../types/gis';
+import { LanguageCode } from '../i18n/translations';
 
 interface GISState {
   role: UserRole;
   setRole: (role: UserRole) => void;
   
+  language: LanguageCode;
+  setLanguage: (lang: LanguageCode) => void;
+
   activeBasemap: 'osm' | 'esri' | 'carto' | 'opentopo';
   setActiveBasemap: (basemap: 'osm' | 'esri' | 'carto' | 'opentopo') => void;
 
@@ -34,6 +38,9 @@ interface GISState {
 export const useGISStore = create<GISState>((set) => ({
   role: 'Survey Officer',
   setRole: (role) => set({ role }),
+
+  language: 'en',
+  setLanguage: (language) => set({ language }),
 
   activeBasemap: 'osm',
   setActiveBasemap: (activeBasemap) => set({ activeBasemap }),

@@ -24,6 +24,10 @@ const CitizenHomePage = lazy(() => import('./pages/CitizenHomePage').then(m => (
 const CitizenSearchPage = lazy(() => import('./pages/CitizenSearchPage').then(m => ({ default: m.CitizenSearchPage })));
 const CitizenComplaintPage = lazy(() => import('./pages/CitizenComplaintPage').then(m => ({ default: m.CitizenComplaintPage })));
 
+// Auth Pages
+const GovLoginPage = lazy(() => import('./pages/GovLoginPage').then(m => ({ default: m.GovLoginPage })));
+const CitizenLoginPage = lazy(() => import('./pages/CitizenLoginPage').then(m => ({ default: m.CitizenLoginPage })));
+
 // Loading fallback component during route transitions
 const PageLoader: React.FC = () => (
   <div className="flex items-center justify-center h-[calc(100vh-120px)] text-slate-500 text-xs space-x-2">
@@ -44,6 +48,20 @@ const GovRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
 const AppLayout: React.FC = () => {
   const location = useLocation();
   const { role } = useGISStore();
+
+  const isAuthPage = location.pathname.startsWith('/login');
+  if (isAuthPage) {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/login/government" element={<GovLoginPage />} />
+          <Route path="/login/citizen" element={<CitizenLoginPage />} />
+          <Route path="*" element={<Navigate to="/login/government" replace />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+
   const isCitizen = location.pathname.startsWith('/citizen') || role === 'Citizen';
 
   return (

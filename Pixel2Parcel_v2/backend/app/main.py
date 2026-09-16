@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.database.session import engine, Base
-from app.routers import survey, segmentation, parcels, topology, risk, gnss, complaints, reports
+from app.routers import survey, segmentation, parcels, topology, risk, gnss, complaints, reports, auth
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)
@@ -25,6 +25,7 @@ app.add_middleware(
 )
 
 # Include API Routers
+app.include_router(auth.router, prefix=settings.API_V1_STR)
 app.include_router(survey.router, prefix=settings.API_V1_STR)
 app.include_router(segmentation.router, prefix=settings.API_V1_STR)
 app.include_router(parcels.router, prefix=settings.API_V1_STR)

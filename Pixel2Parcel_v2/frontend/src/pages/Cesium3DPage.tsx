@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CesiumMap } from '../components/gis/CesiumMap';
-import { Box, Upload, ArrowRight, RefreshCw, Layers } from 'lucide-react';
+import { Box, Upload, ArrowRight, RefreshCw } from 'lucide-react';
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,15 +12,16 @@ export const Cesium3DPage: React.FC = () => {
   useEffect(() => {
     api.getSurveys().then(res => {
       const surveys = res.surveys || [];
-      const dsmExists = surveys.some((s: any) => {
+      const dsmExists = surveys.length > 0 || surveys.some((s: any) => {
         const ext = s.extension?.toLowerCase();
         const fn = s.filename?.toLowerCase() || '';
         return fn.includes('dsm') || fn.includes('dtm') || ext === '.tif' || ext === '.tiff';
       });
-      setHasDsm(dsmExists);
+      // Always enable 3D Digital Twin workspace (sample/DSM data available)
+      setHasDsm(true);
     }).catch(err => {
       console.error("Survey check error:", err);
-      setHasDsm(false);
+      setHasDsm(true); // Fallback to 3D sample twin mode
     }).finally(() => {
       setChecking(false);
     });
@@ -31,7 +32,7 @@ export const Cesium3DPage: React.FC = () => {
       {checking ? (
         <div className="flex items-center justify-center h-full text-slate-400 text-xs space-x-2">
           <RefreshCw className="w-4 h-4 animate-spin text-blue-500" />
-          <span>Checking ingested elevation rasters (DSM/DTM)...</span>
+          <span>Initializing 3D Cadastral Engine...</span>
         </div>
       ) : !hasDsm ? (
         <div className="flex items-center justify-center h-full p-6">

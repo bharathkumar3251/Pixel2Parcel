@@ -8,15 +8,15 @@ from app.core.security import require_government_role
 
 router = APIRouter(prefix="/complaints", tags=["Citizen Complaints"])
 
-SAMPLE_GEOJSON_PATH = os.path.join(settings.SAMPLE_DATA_DIR, "sample_parcels.geojson")
+from app.routers.parcels import _load_parcels_geojson
 
 def _parcel_exists(parcel_id: str) -> bool:
-    if os.path.exists(SAMPLE_GEOJSON_PATH):
-        with open(SAMPLE_GEOJSON_PATH, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            for feat in data.get("features", []):
-                if feat.get("properties", {}).get("parcel_id", "").lower() == parcel_id.lower():
-                    return True
+    data = _load_parcels_geojson()
+    for feat in data.get("features", []):
+        p_id = feat.get("properties", {}).get("parcel_id", "").lower()
+        s_no = feat.get("properties", {}).get("survey_number", "").lower()
+        if p_id == parcel_id.lower() or s_no == parcel_id.lower() or parcel_id.lower() in p_id:
+            return True
     return False
 
 # In-memory storage with initial complaints

@@ -175,8 +175,12 @@ async def save_edited_geometry(
             break
 
     if updated:
-        with open(SAMPLE_GEOJSON_PATH, "w", encoding="utf-8") as f:
+        os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
+        with open(ACTIVE_SESSION_GEOJSON, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
+        if os.path.exists(SAMPLE_GEOJSON_PATH):
+            with open(SAMPLE_GEOJSON_PATH, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2)
 
     return {
         "status": "Success",

@@ -3,6 +3,7 @@ import { Cpu, Layers, Play, Pause, CheckCircle2, Eye, Download, ArrowRight, Aler
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { useGISStore } from '../store/gisStore';
+import { OpenLayersMap } from '../components/gis/OpenLayersMap';
 
 export const SegmentationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -259,23 +260,53 @@ export const SegmentationPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Canvas Box */}
-          <div className="relative w-full h-[360px] bg-slate-950 rounded-lg overflow-hidden border border-slate-700">
-            <img
-              src={getStepImage()}
-              alt="Extraction visual"
-              className="w-full h-full object-cover transition-all duration-700"
-            />
+          {/* Dynamic GIS Canvas Container */}
+          <div className="relative w-full h-[380px] bg-slate-950 rounded-xl overflow-hidden border border-slate-700 shadow-inner">
+            {activeStep === 5 || activeTab === 'overlay' ? (
+              <div className="w-full h-full relative">
+                <OpenLayersMap />
+                <div className="absolute top-3 left-3 bg-blue-600/90 text-white font-mono text-xs px-3 py-1.5 rounded-lg shadow-lg flex items-center space-x-2 border border-blue-400 backdrop-blur">
+                  <Layers className="w-3.5 h-3.5 text-amber-300" />
+                  <span className="font-bold">LIVE OPENLAYERS CADASTRAL VECTOR OVERLAY</span>
+                </div>
+              </div>
+            ) : (
+              <div className="relative w-full h-full bg-[#0d1b2a] flex items-center justify-center overflow-hidden">
+                {/* Aerial Satellite Imagery Base Canvas */}
+                <div 
+                  className={`w-full h-full transition-all duration-700 bg-cover bg-center ${
+                    activeStep === 2 || activeTab === 'edge' ? 'invert contrast-200 grayscale' : ''
+                  }`}
+                  style={{
+                    backgroundImage: `url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/17/56214/93551')`
+                  }}
+                />
+
+                {/* Simulated AI Mask Layer Overlay */}
+                {(activeStep === 3 || activeTab === 'segmentation') && (
+                  <div className="absolute inset-0 bg-blue-600/30 backdrop-hue-rotate-90 transition-all duration-500 flex items-center justify-center">
+                    <div className="border-2 border-emerald-400 bg-emerald-500/20 px-4 py-2 rounded-lg font-mono text-xs text-white font-bold animate-pulse">
+                      SAM2 / DeepLabV3+ Semantic Class Mask Applied
+                    </div>
+                  </div>
+                )}
+
+                {/* Edge Filter Overlay */}
+                {(activeStep === 2 || activeTab === 'edge') && (
+                  <div className="absolute inset-0 border-4 border-amber-400/40 mix-blend-difference pointer-events-none" />
+                )}
+              </div>
+            )}
 
             {/* Live Animation Processing Badge */}
             {isPlaying && (
-              <div className="absolute top-3 left-3 bg-blue-600 text-white font-mono text-xs px-3 py-1.5 rounded-lg shadow-lg flex items-center space-x-2 animate-pulse border border-blue-400">
+              <div className="absolute top-3 right-3 bg-blue-600 text-white font-mono text-xs px-3 py-1.5 rounded-lg shadow-lg flex items-center space-x-2 animate-pulse border border-blue-400">
                 <RefreshCw className="w-3.5 h-3.5 animate-spin text-amber-300" />
                 <span className="font-bold">PROCESSING STAGE {activeStep}/5...</span>
               </div>
             )}
 
-            <div className="absolute bottom-3 right-3 bg-slate-900/90 text-slate-200 font-mono text-[10px] px-3 py-1.5 rounded-lg border border-slate-700 backdrop-blur">
+            <div className="absolute bottom-3 right-3 bg-slate-900/90 text-slate-200 font-mono text-[10px] px-3 py-1.5 rounded-lg border border-slate-700 backdrop-blur z-10">
               Stage {activeStep}: {steps[activeStep - 1].desc}
             </div>
           </div>

@@ -11,11 +11,13 @@ router = APIRouter(prefix="/survey", tags=["Survey Upload & Metadata"])
 @router.post("/upload")
 async def upload_survey_file(
     file: UploadFile = File(...),
-    file_type: Optional[str] = Form("GeoTIFF"),
+    file_type: Optional[str] = Form(None),
+    category: Optional[str] = Form(None),
     role: str = Depends(require_government_role)
 ):
     """Upload a real GIS file (GeoTIFF, GeoJSON, Shapefile ZIP, KML, GPKG, GNSS CSV) and automatically extract spatial metadata."""
     filename = file.filename
+    effective_type = category or file_type or "GeoTIFF"
     save_path = os.path.join(settings.UPLOAD_DIR, filename)
 
     try:
