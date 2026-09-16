@@ -344,4 +344,4 @@ Verified Urban Cadastral Map
 
 Sri Eshwar College of Engineering
 
-**Hack2Ignite 2026 | Department of Land Resources (DoLR)**
+**Hack2Ignite 2026 **
