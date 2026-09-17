@@ -1,0 +1,10 @@
+{
+  "buildCommand": "cd Pixel2Parcel_v2/frontend && npm install && npm run build",
+  "outputDirectory": "Pixel2Parcel_v2/frontend/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
