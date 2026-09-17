@@ -1,4 +1,5 @@
 @import 'ol/ol.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +7,125 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    @apply bg-slate-950 text-slate-100 font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Outfit', 'Inter', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Glassmorphism & Cyber GIS Utilities */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.15), 0 0 20px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.glass-pill {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Glowing Border Effects */
+.glow-border-blue {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+  border-color: rgba(96, 165, 250, 0.5) !important;
+}
+
+.glow-border-amber {
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+  border-color: rgba(251, 191, 36, 0.5) !important;
+}
+
+.glow-border-emerald {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  border-color: rgba(52, 211, 153, 0.5) !important;
+}
+
+/* Gradient Text Utilities */
+.text-gradient-blue {
+  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #2563EB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 50%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #6EE7B7 0%, #10B981 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cyber Grid & Mesh Background */
+.cyber-grid-bg {
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.mesh-gradient-dark {
+  background: radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.4) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(180, 83, 9, 0.25) 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, rgba(2, 6, 23, 1) 100%);
+}
+
+/* Animations */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6)); }
+  50% { opacity: 0.9; filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.9)); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
 /* OpenLayers Custom Map & Canvas Styling */
@@ -17,47 +135,52 @@
 }
 
 .ol-control {
-  background-color: #FFFFFF !important;
-  border-radius: 6px !important;
-  padding: 3px !important;
-  border: 1px solid #CBD5E1 !important;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.12) !important;
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 8px !important;
+  padding: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
 }
 
 .ol-control button {
-  background-color: #002147 !important;
-  color: #FFFFFF !important;
-  border-radius: 4px !important;
+  background-color: #0F172A !important;
+  color: #60A5FA !important;
+  border-radius: 6px !important;
   font-weight: bold !important;
   font-size: 14px !important;
-  width: 28px !important;
-  height: 28px !important;
+  width: 30px !important;
+  height: 30px !important;
+  transition: all 0.2s ease !important;
 }
 
 .ol-control button:hover {
-  background-color: #1D4ED8 !important;
+  background-color: #1E40AF !important;
+  color: #FFFFFF !important;
 }
 
 .ol-scale-line {
-  background: rgba(0, 33, 71, 0.90) !important;
-  color: #FFFFFF !important;
-  border-radius: 4px !important;
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(8px) !important;
+  color: #FCD34D !important;
+  border-radius: 6px !important;
   font-size: 11px !important;
-  padding: 4px 8px !important;
-  font-family: monospace !important;
+  padding: 4px 10px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
 }
 
 /* Official DoLR Government Utility Classes */
 .bg-govt-navy {
-  background-color: #002147 !important;
+  background-color: #0A192F !important;
 }
 
 .text-govt-navy {
-  color: #002147 !important;
+  color: #60A5FA !important;
 }
 
 .border-govt-navy {
-  border-color: #002147 !important;
+  border-color: #1E3A8A !important;
 }
 
 /* Custom Scrollbars */
@@ -66,13 +189,15 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #090D16;
 }
 ::-webkit-scrollbar-thumb {
-  background: #94A3B8;
-  border-radius: 3px;
+  background: #334155;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748B;
+  background: #475569;
 }
+
 

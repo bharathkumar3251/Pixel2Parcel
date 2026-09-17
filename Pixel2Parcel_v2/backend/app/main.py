@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.database.session import engine, Base
-from app.routers import survey, segmentation, parcels, topology, risk, gnss, complaints, reports, auth
+from app.routers import survey, segmentation, parcels, topology, risk, gnss, complaints, reports, auth, analytics
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)
@@ -34,6 +34,7 @@ app.include_router(risk.router, prefix=settings.API_V1_STR)
 app.include_router(gnss.router, prefix=settings.API_V1_STR)
 app.include_router(complaints.router, prefix=settings.API_V1_STR)
 app.include_router(reports.router, prefix=settings.API_V1_STR)
+app.include_router(analytics.router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 async def root():

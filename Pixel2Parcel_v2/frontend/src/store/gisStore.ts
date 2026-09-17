@@ -30,6 +30,16 @@ interface GISState {
   mouseCoords: { lat: number; lon: number; utm: string } | null;
   setMouseCoords: (coords: { lat: number; lon: number; utm: string } | null) => void;
 
+  // Real-Time Urban Jurisdiction Cascading Engine State
+  selectedState: string;
+  setSelectedState: (state: string) => void;
+  selectedCity: string;
+  setSelectedCity: (city: string) => void;
+  selectedWard: string;
+  setSelectedWard: (ward: string) => void;
+  ctsQuery: string;
+  setCtsQuery: (cts: string) => void;
+
   // Signal for global data invalidation across upstream -> downstream modules
   dataVersion: number;
   triggerRefresh: () => void;
@@ -47,6 +57,15 @@ export const useGISStore = create<GISState>((set) => ({
 
   viewMode: '2d',
   setViewMode: (viewMode) => set({ viewMode }),
+
+  selectedState: 'Maharashtra',
+  setSelectedState: (selectedState) => set({ selectedState }),
+  selectedCity: 'Pune Municipal Corporation (PMC)',
+  setSelectedCity: (selectedCity) => set({ selectedCity }),
+  selectedWard: 'Ward 12 - Baner Smart Sector',
+  setSelectedWard: (selectedWard) => set({ selectedWard }),
+  ctsQuery: '',
+  setCtsQuery: (ctsQuery) => set({ ctsQuery }),
 
   layers: [
     { id: 'parcels', name: 'Cadastral Parcels (GeoJSON)', type: 'vector', visible: true, opacity: 0.85, featureCount: 5 },

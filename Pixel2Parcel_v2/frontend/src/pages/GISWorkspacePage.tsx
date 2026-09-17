@@ -58,14 +58,14 @@ export const GISWorkspacePage: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-slate-900 select-none">
+    <div className="relative w-full h-full overflow-hidden bg-slate-950 select-none cyber-grid-bg font-sans">
       {/* Top Floating GIS Toolbar */}
-      <div className="absolute top-3 left-3 right-3 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+      <div className="absolute top-3 left-3 right-3 z-20 flex flex-wrap items-center justify-between gap-3 pointer-events-none">
         {/* Left Group: Search Bar & Presets */}
         <div className="flex items-center space-x-2 pointer-events-auto">
           <form onSubmit={handleSearch} className="relative">
-            <div className="flex items-center bg-white/95 backdrop-blur border border-slate-300 rounded-lg shadow-md overflow-hidden">
-              <div className="pl-3 text-slate-400">
+            <div className="flex items-center bg-slate-900/90 backdrop-blur-xl border border-slate-700/80 rounded-xl shadow-2xl overflow-hidden">
+              <div className="pl-3.5 text-amber-400">
                 <Search className="w-4 h-4" />
               </div>
               <input
@@ -73,11 +73,11 @@ export const GISWorkspacePage: React.FC = () => {
                 placeholder="Search Parcel ID (e.g. P2P-IND-MH-4001) or Address..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-72 px-2 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none bg-transparent"
+                className="w-72 px-3 py-2 text-xs text-slate-100 placeholder-slate-400 focus:outline-none bg-transparent font-mono"
               />
               <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-2 transition-colors"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white text-xs font-bold px-4 py-2 transition-all border-l border-slate-700"
               >
                 {isSearching ? 'Searching...' : 'Find'}
               </button>
@@ -85,7 +85,7 @@ export const GISWorkspacePage: React.FC = () => {
 
             {/* Nominatim Search Dropdown Results */}
             {searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-300 rounded-lg shadow-xl overflow-hidden z-50 text-xs">
+              <div className="absolute top-full left-0 right-0 mt-1.5 bg-slate-900/95 backdrop-blur-2xl border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50 text-xs text-slate-100">
                 {searchResults.map((res, idx) => (
                   <div
                     key={idx}
@@ -93,10 +93,10 @@ export const GISWorkspacePage: React.FC = () => {
                       setSearchQuery(res.display_name);
                       setSearchResults([]);
                     }}
-                    className="p-2.5 hover:bg-blue-50 border-b border-slate-100 cursor-pointer text-slate-800 truncate"
+                    className="p-2.5 hover:bg-blue-600/20 border-b border-slate-800 cursor-pointer text-slate-200 truncate transition-colors"
                   >
-                    <div className="font-bold flex items-center space-x-1 text-slate-900">
-                      <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                    <div className="font-bold flex items-center space-x-1.5 text-slate-100">
+                      <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                       <span className="truncate">{res.display_name}</span>
                     </div>
                   </div>
@@ -113,38 +113,38 @@ export const GISWorkspacePage: React.FC = () => {
         </div>
 
         {/* Center Basemap Switcher */}
-        <div className="bg-white/95 backdrop-blur border border-slate-300 rounded-lg shadow-md p-1 flex items-center space-x-1 pointer-events-auto text-xs">
-          <span className="text-[10px] uppercase font-bold text-slate-400 px-2 border-r border-slate-200">
+        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-700/80 rounded-xl shadow-2xl p-1 flex items-center space-x-1 pointer-events-auto text-xs">
+          <span className="text-[10px] uppercase font-bold text-slate-400 px-2.5 border-r border-slate-800 font-mono">
             Basemap
           </span>
           <button
             onClick={() => setActiveBasemap('esri')}
-            className={`px-2.5 py-1 rounded font-semibold transition-all ${
-              activeBasemap === 'esri' ? 'bg-govt-navy text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
+              activeBasemap === 'esri' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
             }`}
           >
             Esri Satellite
           </button>
           <button
             onClick={() => setActiveBasemap('osm')}
-            className={`px-2.5 py-1 rounded font-semibold transition-all ${
-              activeBasemap === 'osm' ? 'bg-govt-navy text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
+              activeBasemap === 'osm' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
             }`}
           >
             OpenStreetMap
           </button>
           <button
             onClick={() => setActiveBasemap('carto')}
-            className={`px-2.5 py-1 rounded font-semibold transition-all ${
-              activeBasemap === 'carto' ? 'bg-govt-navy text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
+              activeBasemap === 'carto' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
             }`}
           >
             Carto Light
           </button>
           <button
             onClick={() => setActiveBasemap('opentopo')}
-            className={`px-2.5 py-1 rounded font-semibold transition-all ${
-              activeBasemap === 'opentopo' ? 'bg-govt-navy text-white shadow-sm' : 'text-slate-700 hover:bg-slate-100'
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
+              activeBasemap === 'opentopo' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
             }`}
           >
             OpenTopo
@@ -155,18 +155,18 @@ export const GISWorkspacePage: React.FC = () => {
         <div className="flex items-center space-x-2 pointer-events-auto">
           <button
             onClick={() => setShowWmsModal(true)}
-            className="bg-white/95 hover:bg-blue-50 text-blue-700 font-bold border border-slate-300 px-3 py-2 rounded-lg text-xs shadow-md flex items-center space-x-1.5 transition-colors"
+            className="bg-slate-900/90 hover:bg-slate-800 text-blue-400 font-bold border border-slate-700/80 px-3.5 py-2 rounded-xl text-xs shadow-2xl backdrop-blur-xl flex items-center space-x-1.5 transition-all"
           >
-            <Globe className="w-4 h-4 text-blue-600" />
+            <Globe className="w-4 h-4 text-blue-400" />
             <span>Add WMS/WMTS</span>
           </button>
 
           <button
             onClick={() => setShowLayerManager(!showLayerManager)}
-            className={`px-3 py-2 rounded-lg text-xs font-bold border shadow-md flex items-center space-x-1.5 transition-colors ${
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold border shadow-2xl backdrop-blur-xl flex items-center space-x-1.5 transition-all ${
               showLayerManager
-                ? 'bg-blue-600 text-white border-blue-700'
-                : 'bg-white/95 text-slate-800 border-slate-300 hover:bg-slate-100'
+                ? 'bg-blue-600 text-white border-blue-500 shadow-blue-600/30'
+                : 'bg-slate-900/90 text-slate-200 border-slate-700/80 hover:bg-slate-800'
             }`}
           >
             <Layers className="w-4 h-4" />
@@ -189,9 +189,9 @@ export const GISWorkspacePage: React.FC = () => {
       <InspectorDrawer />
 
       {/* Bottom Live Mouse Coordinates Status Bar */}
-      <div className="absolute bottom-3 left-3 z-20 bg-govt-navy/90 text-white border border-slate-700 px-3 py-1.5 rounded-lg shadow-lg backdrop-blur text-xs flex items-center space-x-4 pointer-events-auto font-mono">
-        <div className="flex items-center space-x-1.5 text-amber-400">
-          <Navigation className="w-3.5 h-3.5" />
+      <div className="absolute bottom-3 left-3 z-20 bg-slate-950/90 text-white border border-slate-700/80 px-4 py-2 rounded-xl shadow-2xl backdrop-blur-md text-xs flex items-center space-x-4 pointer-events-auto font-mono">
+        <div className="flex items-center space-x-2 text-amber-400 font-bold">
+          <Navigation className="w-3.5 h-3.5 animate-spin" />
           <span>Coordinates:</span>
         </div>
         <div>
@@ -202,7 +202,8 @@ export const GISWorkspacePage: React.FC = () => {
           <span className="text-slate-400">Lon:</span>{' '}
           <span className="text-white font-bold">{mouseCoords ? mouseCoords.lon : '73.789500'}°E</span>
         </div>
-        <div className="border-l border-slate-700 pl-3">
+        <div className="border-l border-slate-700 pl-4 flex items-center space-x-1.5">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="text-slate-400">UTM:</span>{' '}
           <span className="text-emerald-400 font-bold">{mouseCoords ? mouseCoords.utm : '43N E:372140m N:2052840m'}</span>
         </div>

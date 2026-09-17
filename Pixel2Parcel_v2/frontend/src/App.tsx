@@ -19,6 +19,13 @@ const GnssVerificationPage = lazy(() => import('./pages/GnssVerificationPage').t
 const ComplaintManagerPage = lazy(() => import('./pages/ComplaintManagerPage').then(m => ({ default: m.ComplaintManagerPage })));
 const ReportsPage = lazy(() => import('./pages/ReportsPage').then(m => ({ default: m.ReportsPage })));
 
+// New Government Intelligence Analytics Pages
+const FarViolationPage = lazy(() => import('./pages/FarViolationPage').then(m => ({ default: m.FarViolationPage })));
+const TemporalChangePage = lazy(() => import('./pages/TemporalChangePage').then(m => ({ default: m.TemporalChangePage })));
+const TaxAnalyticsPage = lazy(() => import('./pages/TaxAnalyticsPage').then(m => ({ default: m.TaxAnalyticsPage })));
+const SolarAnalyticsPage = lazy(() => import('./pages/SolarAnalyticsPage').then(m => ({ default: m.SolarAnalyticsPage })));
+const FloodModelerPage = lazy(() => import('./pages/FloodModelerPage').then(m => ({ default: m.FloodModelerPage })));
+
 // Citizen Pages
 const CitizenHomePage = lazy(() => import('./pages/CitizenHomePage').then(m => ({ default: m.CitizenHomePage })));
 const CitizenSearchPage = lazy(() => import('./pages/CitizenSearchPage').then(m => ({ default: m.CitizenSearchPage })));
@@ -65,11 +72,11 @@ const AppLayout: React.FC = () => {
   const isCitizen = location.pathname.startsWith('/citizen') || role === 'Citizen';
 
   return (
-    <div className="h-screen flex flex-col bg-slate-100 text-slate-900 overflow-hidden font-sans">
+    <div className="h-screen flex flex-col bg-slate-950 text-slate-100 overflow-hidden font-sans">
       <Navbar />
       <div className="flex flex-1 overflow-hidden">
         {!isCitizen && <Sidebar />}
-        <main className="flex-1 overflow-y-auto bg-slate-100 relative">
+        <main className="flex-1 overflow-y-auto bg-slate-950 relative">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Redirect root to Government Dashboard if staff, or Citizen Home if Citizen */}
@@ -87,6 +94,13 @@ const AppLayout: React.FC = () => {
               <Route path="/government/verification" element={<GovRoute element={<GnssVerificationPage />} />} />
               <Route path="/government/complaints" element={<GovRoute element={<ComplaintManagerPage />} />} />
               <Route path="/government/reports" element={<GovRoute element={<ReportsPage />} />} />
+
+              {/* Advanced Government Intelligence Routes */}
+              <Route path="/government/far-audit" element={<GovRoute element={<FarViolationPage />} />} />
+              <Route path="/government/temporal-change" element={<GovRoute element={<TemporalChangePage />} />} />
+              <Route path="/government/tax-audit" element={<GovRoute element={<TaxAnalyticsPage />} />} />
+              <Route path="/government/solar-twin" element={<GovRoute element={<SolarAnalyticsPage />} />} />
+              <Route path="/government/flood-modeler" element={<GovRoute element={<FloodModelerPage />} />} />
 
               {/* Citizen Routes (Public Access) */}
               <Route path="/citizen/home" element={<CitizenHomePage />} />
